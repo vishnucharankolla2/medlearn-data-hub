@@ -1,0 +1,90 @@
+{
+  "run_timestamp": "2026-09-09T17:08:02.137047",
+  "dataset_checks": {
+    "patients": [
+      {
+        "passed": false,
+        "null_count": 3,
+        "total_rows": 100,
+        "failure_percentage": 3.0,
+        "rule_name": "patient_id_not_null",
+        "severity": "ERROR",
+        "column": "patient_id",
+        "description": "Patient ID must exist for every record"
+      },
+      {
+        "passed": false,
+        "future_count": 4,
+        "total_rows": 100,
+        "failure_percentage": 4.0,
+        "rule_name": "birth_date_not_future",
+        "severity": "WARNING",
+        "column": "birth_date",
+        "description": "Birth date cannot be in the future"
+      },
+      {
+        "passed": false,
+        "invalid_count": 17,
+        "total_rows": 100,
+        "failure_percentage": 17.0,
+        "rule_name": "gender_standardized",
+        "severity": "WARNING",
+        "column": "gender",
+        "description": "Gender must be in standard formats"
+      }
+    ],
+    "visits": [
+      {
+        "passed": false,
+        "orphan_count": 17,
+        "total_rows": 200,
+        "missing_keys": [
+          96.0,
+          12.0
+        ],
+        "failure_percentage": 8.5,
+        "rule_name": "visit_patient_exists",
+        "severity": "ERROR",
+        "column": "patient_id",
+        "description": "Every visit must link to an existing patient"
+      },
+      {
+        "passed": false,
+        "invalid_count": 6,
+        "total_rows": 200,
+        "failure_percentage": 3.0,
+        "rule_name": "admission_before_discharge",
+        "severity": "ERROR",
+        "column": "admission_date",
+        "description": "Admission must be before discharge"
+      }
+    ],
+    "labs": [
+      {
+        "passed": false,
+        "invalid_count": 15,
+        "total_rows": 500,
+        "failure_percentage": 3.0,
+        "rule_name": "lab_value_outlier",
+        "severity": "WARNING",
+        "column": "value",
+        "description": "Lab values should be within reasonable range"
+      },
+      {
+        "passed": true,
+        "empty_count": 0,
+        "total_rows": 500,
+        "failure_percentage": 0.0,
+        "rule_name": "lab_unit_not_empty",
+        "severity": "WARNING",
+        "column": "unit",
+        "description": "Lab unit should not be empty"
+      }
+    ]
+  },
+  "summary": {
+    "total_error_failures": 3,
+    "total_warning_failures": 3,
+    "overall_status": "\u274c FAILED"
+  }
+}

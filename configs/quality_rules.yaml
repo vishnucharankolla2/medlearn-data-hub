@@ -1,0 +1,51 @@
+rules:
+  patients:
+    - rule_name: "patient_id_not_null"
+      column: "patient_id"
+      check: "not_null"
+      severity: "ERROR"
+      description: "Patient ID must exist for every record"
+    
+    - rule_name: "birth_date_not_future"
+      column: "birth_date"
+      check: "date_not_future"
+      severity: "WARNING"
+      description: "Birth date cannot be in the future"
+    
+    - rule_name: "gender_standardized"
+      column: "gender"
+      check: "accepted_values"
+      accepted: ["M", "F", "Male", "Female", "1", "2"]
+      severity: "WARNING"
+      description: "Gender must be in standard formats"
+
+  visits:
+    - rule_name: "visit_patient_exists"
+      column: "patient_id"
+      check: "foreign_key_exists"
+      reference_table: "patients"
+      reference_column: "patient_id"
+      severity: "ERROR"
+      description: "Every visit must link to an existing patient"
+    
+    - rule_name: "admission_before_discharge"
+      column: "admission_date"
+      check: "date_less_than"
+      compare_column: "discharge_date"
+      severity: "ERROR"
+      description: "Admission must be before discharge"
+
+  labs:
+    - rule_name: "lab_value_outlier"
+      column: "value"
+      check: "between"
+      min: 0
+      max: 500
+      severity: "WARNING"
+      description: "Lab values should be within reasonable range"
+    
+    - rule_name: "lab_unit_not_empty"
+      column: "unit"
+      check: "not_empty"
+      severity: "WARNING"
+      description: "Lab unit should not be empty"
